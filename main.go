@@ -14,6 +14,7 @@ func helloWorld(c *fiber.Ctx) {
 	c.Send("Hello World");
 }
 func setupRoutes(app *fiber.App) {
+
 	app.Get("/api/v1/release", release.GetReleases)
 	app.Get("/api/v1/release/:id", release.GetRelease)
 	app.Post("/api/v1/release", release.NewRelease)

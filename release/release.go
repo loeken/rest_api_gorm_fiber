@@ -35,6 +35,19 @@ func NewRelease(c *fiber.Ctx) {
 	db.Create(&release)
 	c.JSON(release) 
 }
+
+func UpdateRelease(c *fiber.Ctx) {
+	id := c.Params("id")
+	db := database.DBConn
+	var release Release
+	db.First(&release, id)
+	if err := c.BodyParser(&release); err != nil {
+		c.Status(503).Send(err)
+	}
+	db.Save(&release)
+	c.JSON(release) 
+}
+
 func DeleteRelease(c *fiber.Ctx) {
 	id := c.Params("id")
 	db := database.DBConn
@@ -46,7 +59,4 @@ func DeleteRelease(c *fiber.Ctx) {
 	}
 	db.Delete(&release)
 	c.Send("release successfully deleted")
-}
-func UpdateRelease(c *fiber.Ctx) {
-	c.Send("Updates Release")
 }
